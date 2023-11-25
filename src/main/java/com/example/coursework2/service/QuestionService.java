@@ -5,14 +5,14 @@ import com.example.coursework2.Question;
 import java.util.Collection;
 
 public interface QuestionService<T> {
-    void add(T question, T answer);
+    void add(String question, String answer);
 
     void add(T question);
 
     void remove(T question);
 
-    Collection<Question> getAll();
+    Collection<T> getAll();
 
-   Question getRandomQuestion();
+   T getRandomQuestion();
 
 }

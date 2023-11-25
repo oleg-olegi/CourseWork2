@@ -3,13 +3,10 @@ package com.example.coursework2.service;
 import com.example.coursework2.Question;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 @Service
-public class JavaQuestionService implements QuestionService<String> {
+public class JavaQuestionService implements QuestionService<Question> {
     private Set<Question> questionSet;
 
     public JavaQuestionService() {
@@ -22,13 +19,13 @@ public class JavaQuestionService implements QuestionService<String> {
     }
 
     @Override
-    public void add(String question) {
-        questionSet.add(new Question(question));
+    public void add(Question question) {
+        questionSet.add(question);
     }
 
 
     @Override
-    public void remove(String question) {
+    public void remove(Question question) {
         questionSet.remove(question);
     }
 
@@ -39,8 +36,10 @@ public class JavaQuestionService implements QuestionService<String> {
 
     @Override
     public Question getRandomQuestion() {
-        int rndNum = new Random().nextInt(questionSet.size());
-        Object[] array = questionSet.toArray();
-        return (Question) array[rndNum];
+        if (!questionSet.isEmpty()) {
+            int rndNum = new Random().nextInt(questionSet.size());
+            List<Question> questionsList = new ArrayList<>(questionSet);
+            return questionsList.get(rndNum);
+        } else throw new RuntimeException();
     }
 }
