@@ -5,13 +5,18 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collection;
+import java.util.stream.Stream;
 
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class JavaQuestionServiceTest {
@@ -24,15 +29,18 @@ public class JavaQuestionServiceTest {
         javaQuestionService = new JavaQuestionService();
     }
 
-    @Test
-    void addTest() {
-        String question = "Question";
-        String answer = "Answer";
+    static Stream<Arguments> argumentsStream() {
+        return Stream.of(Arguments.of("Question", "Answer"));
+    }
+
+    @ParameterizedTest
+    @MethodSource("argumentsStream")
+    void addTest(String question, String answer) {
         Question addedQuestion = new Question(question, answer);//expected
         javaQuestionService.add(question, answer);//actual
         //проверяем, что объект добавлен в коллекцию
         Collection<Question> allQuestions = javaQuestionService.getAll();
-        Assertions.assertTrue(allQuestions.contains(addedQuestion));
+        assertTrue(allQuestions.contains(addedQuestion));
     }
 
     @Test
@@ -41,8 +49,21 @@ public class JavaQuestionServiceTest {
         when(questionMock.getAnswer()).thenReturn("AnswerText");
         javaQuestionService.add(questionMock);
         Collection<Question> questionSet = javaQuestionService.getAll();
-        Assertions.assertTrue(questionSet.contains(questionMock));
+        assertTrue(questionSet.contains(questionMock));
     }
+
+    @ParameterizedTest
+    @MethodSource("argumentsStream")
+    void removeTest(String question, String answer) {
+        javaQuestionService.add(question, answer);
+        Collection<Question> questionSet = javaQuestionService.getAll();
+        Question questionToRemove = new Question(question, answer);
+        javaQuestionService.remove(questionToRemove);
+        assertTrue(questionSet.isEmpty());
+        assertFalse(questionSet.contains(questionToRemove));
+        assertThrows(IllegalArgumentException.class, () -> javaQuestionService.remove(questionToRemove));
+    }
+
     // Переопределение equals и hashCode в мок-объекте Question
     static class MockQuestion extends Question {
         public MockQuestion(String question, String answer) {
@@ -62,10 +83,5 @@ public class JavaQuestionServiceTest {
         public int hashCode() {
             return java.util.Objects.hash(getQuestion(), getAnswer());
         }
-    }
-
-    @Test
-    void removeTest() {
-
     }
 }

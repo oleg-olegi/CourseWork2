@@ -27,7 +27,9 @@ public class JavaQuestionService implements QuestionService<Question> {
 
     @Override
     public void remove(Question question) {
-        questionSet.remove(question);
+        if (questionSet.contains(question)) {
+            questionSet.remove(question);
+        } else throw new IllegalArgumentException("Question not found");
     }
 
     @Override
