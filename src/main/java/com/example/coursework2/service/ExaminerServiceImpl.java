@@ -28,6 +28,7 @@ public class ExaminerServiceImpl implements ExaminerService {
         if (amount > totalQuestions) {
             throw new AmountMoreThanQuestionsQuantityException("Запрос превышает фактическое количество содержимого");
         }
+
         for (int i = 0; i < amount; i++) {
             Question randomQuestion = getRandomUniqueQuestion(questionList, questionListForExam);
             questionListForExam.add(i, randomQuestion);
