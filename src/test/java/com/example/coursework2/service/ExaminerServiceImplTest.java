@@ -1,6 +1,7 @@
 package com.example.coursework2.service;
 
 import com.example.coursework2.Question;
+import com.example.coursework2.exceptions.AmountMoreThanQuestionsQuantityException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,15 +22,13 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class ExaminerServiceImplTest {
     @InjectMocks
-    private ExaminerServiceImpl service;
+    private ExaminerServiceImpl examinerService;
     @Mock
     private JavaQuestionService questionService;
-    @Mock
-    private Random random;
 
     @BeforeEach
     void initService() {
-        service = new ExaminerServiceImpl(questionService);
+        examinerService = new ExaminerServiceImpl(questionService);
     }
 
     static Stream<Arguments> questionsProvider() {
@@ -42,12 +41,21 @@ public class ExaminerServiceImplTest {
     @ParameterizedTest
     @MethodSource("questionsProvider")
     void getQuestionsTest_willReturnSomeUniqueQuestions(Question question1, Question question2, Question question3) {
-        questionService.add(question1);
-        questionService.add(question2);
-        questionService.add(question3);
-        when(service.getQuestions(2)).thenReturn(List.of(question1,question2));
-        Collection<Question> collection = service.getQuestions(2);//тут закончил не работает
+        when(questionService.getAll()).thenReturn(List.of(question1, question2));
+        Collection<Question> collection = examinerService.getQuestions(2);
         Assertions.assertEquals(2, collection.size());
+        Assertions.assertTrue(collection.contains(question1));
+        Assertions.assertTrue(collection.contains(question2));
+        Assertions.assertFalse(collection.contains(question3));
+    }
 
+    @ParameterizedTest
+    @MethodSource("questionsProvider")
+    void getQuestionsTest_willThrowsAmountMoreThanQuestionsQuantityExcp(Question question1,
+                                                                        Question question2, Question question3) {
+        when(questionService.getAll()).thenReturn(List.of(question1, question2));
+        Collection<Question> collection = examinerService.getQuestions(2);
+        Assertions.assertThrows(AmountMoreThanQuestionsQuantityException.class,
+                () -> examinerService.getQuestions(3));
     }
 }

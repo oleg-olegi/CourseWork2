@@ -3,7 +3,6 @@ package com.example.coursework2.service;
 import com.example.coursework2.Question;
 import com.example.coursework2.exceptions.AmountMoreThanQuestionsQuantityException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.Collection;
