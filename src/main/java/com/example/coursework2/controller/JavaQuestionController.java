@@ -1,8 +1,7 @@
 package com.example.coursework2.controller;
 
-import com.example.coursework2.Question;
+import com.example.coursework2.questionclass.Question;
 import com.example.coursework2.service.QuestionService;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,11 +13,15 @@ import java.util.Collection;
 
 @RestController
 @RequestMapping("/exam")
-@AllArgsConstructor
 
 public class JavaQuestionController {
-    @Qualifier("javaQuestions")
+
     private QuestionService questionService;
+
+    @Autowired
+    public JavaQuestionController(@Qualifier("javaQuestions") QuestionService questionService) {
+        this.questionService = questionService;
+    }
 
     @GetMapping("/java")
     public Collection<Question> getAllQuestions() {

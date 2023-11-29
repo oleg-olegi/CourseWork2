@@ -1,6 +1,6 @@
 package com.example.coursework2.service;
 
-import com.example.coursework2.Question;
+import com.example.coursework2.questionclass.Question;
 import com.example.coursework2.exceptions.AmountMoreThanQuestionsQuantityException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

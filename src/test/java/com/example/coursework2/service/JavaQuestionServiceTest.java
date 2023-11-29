@@ -1,6 +1,6 @@
 package com.example.coursework2.service;
 
-import com.example.coursework2.Question;
+import com.example.coursework2.questionclass.Question;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

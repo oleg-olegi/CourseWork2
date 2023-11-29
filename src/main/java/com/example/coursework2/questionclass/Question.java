@@ -1,4 +1,4 @@
-package com.example.coursework2;
+package com.example.coursework2.questionclass;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package com.example.coursework2.controller;
 
-import com.example.coursework2.Question;
+import com.example.coursework2.questionclass.Question;
 import com.example.coursework2.service.ExaminerService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
