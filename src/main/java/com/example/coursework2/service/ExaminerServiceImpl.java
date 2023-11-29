@@ -2,6 +2,7 @@ package com.example.coursework2.service;
 
 import com.example.coursework2.Question;
 import com.example.coursework2.exceptions.AmountMoreThanQuestionsQuantityException;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,12 +12,12 @@ import java.util.Random;
 
 @Service
 public class ExaminerServiceImpl implements ExaminerService {
-    private Random random;
+  //  private Random random;
     private QuestionService questionService;
 
-    public ExaminerServiceImpl(QuestionService questionService) {
+    public ExaminerServiceImpl(@Qualifier("javaQuestions") QuestionService questionService) {
         this.questionService = questionService;
-        this.random = new Random();
+    //    this.random = new Random();
     }
 
     @Override
@@ -38,6 +39,7 @@ public class ExaminerServiceImpl implements ExaminerService {
     }
 
     private Question getRandomUniqueQuestion(List<Question> questions, List<Question> questionListForExam) {
+        Random random = new Random();
         int totalQuestions = questions.size();
         while (true) {
             int randomIndex = random.nextInt(totalQuestions);

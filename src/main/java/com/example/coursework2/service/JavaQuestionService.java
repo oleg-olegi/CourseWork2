@@ -1,11 +1,15 @@
 package com.example.coursework2.service;
 
 import com.example.coursework2.Question;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
+@Component
+@Qualifier("javaQuestions")
 public class JavaQuestionService implements QuestionService<Question> {
     private Set<Question> questionSet;
     private Random random;

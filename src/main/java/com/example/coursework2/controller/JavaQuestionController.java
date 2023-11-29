@@ -3,6 +3,8 @@ package com.example.coursework2.controller;
 import com.example.coursework2.Question;
 import com.example.coursework2.service.QuestionService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,7 +15,9 @@ import java.util.Collection;
 @RestController
 @RequestMapping("/exam")
 @AllArgsConstructor
+
 public class JavaQuestionController {
+    @Qualifier("javaQuestions")
     private QuestionService questionService;
 
     @GetMapping("/java")

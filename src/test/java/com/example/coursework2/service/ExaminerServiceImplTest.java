@@ -45,6 +45,7 @@ public class ExaminerServiceImplTest {
     @MethodSource("questionsProvider")
     void getQuestionsTest_willReturnSomeUniqueQuestions(Question question1, Question question2, Question question3) {
         when(questionService.getAll()).thenReturn(List.of(question1, question2));
+      //  when(random.nextInt(questionService.getAll().size())).thenReturn(0, 1);
         Collection<Question> collection = examinerService.getQuestions(2);
         Assertions.assertEquals(2, collection.size());
         Assertions.assertTrue(collection.contains(question1));
