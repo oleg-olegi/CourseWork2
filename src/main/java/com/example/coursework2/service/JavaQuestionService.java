@@ -43,10 +43,10 @@ public class JavaQuestionService implements QuestionService<Question> {
 
     @Override
     public Question getRandomQuestion() {
-        if (!questionSet.isEmpty()&&questionSet.size()!=1) {
+        if (!questionSet.isEmpty()) {
             int rndNum = random.nextInt(questionSet.size());
             List<Question> questionsList = new ArrayList<>(questionSet);
             return questionsList.get(rndNum);
-        } else throw new RuntimeException("Set is empty");
+        } else throw new NoSuchElementException("Set is empty");
     }
 }

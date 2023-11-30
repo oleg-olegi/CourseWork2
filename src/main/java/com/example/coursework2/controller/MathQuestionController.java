@@ -12,7 +12,7 @@ import java.util.Collection;
 
 
 @RestController
-@RequestMapping("/exam")
+@RequestMapping("/math_exam")
 public class MathQuestionController {
 
     private final QuestionService questionService;

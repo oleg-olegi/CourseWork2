@@ -1,7 +1,7 @@
 package com.example.coursework2.service;
 
-import com.example.coursework2.exceptions.AmountMoreThanQuestionsQuantityException;
 import com.example.coursework2.questionclass.Question;
+import com.example.coursework2.repository.MathRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -12,43 +12,44 @@ import java.util.*;
 @Component
 @Qualifier("mathQuestions")
 public class MathQuestionService implements QuestionService<Question> {
-    private Set<Question> questionSet;
+    private MathRepository mathRepository;
     private Random random;
 
-    public MathQuestionService() {
-        questionSet = new HashSet<>(10);
+    public MathQuestionService(MathRepository mathRepository) {
+        this.mathRepository = mathRepository;
+        /* questionSet = new HashSet<>(10);*/
         random = new Random();
     }
 
     @Override
     public void add(String question, String answer) {
-        questionSet.add(new Question(question, answer));
+        mathRepository.addQuestionFromString(question, answer);
     }
 
     @Override
     public void add(Question question) {
-        questionSet.add(question);
+        mathRepository.add(question);
     }
 
     @Override
     public void remove(Question question) {
-        if (!questionSet.contains(question)) {
-            throw new AmountMoreThanQuestionsQuantityException("Question is not found");
-        }
-        questionSet.remove(question);
+        mathRepository.remove(question);
     }
 
     @Override
     public Collection getAll() {
-        return questionSet;
+        return mathRepository.getAll();
     }
 
     @Override
     public Question getRandomQuestion() {
-        if (!questionSet.isEmpty() && questionSet.size() != 1) {
-            int rndNum = random.nextInt(questionSet.size());
-            List<Question> questionList = new ArrayList<>(questionSet);
+        Collection<Question> allQuestions = mathRepository.getAll();
+        if (!allQuestions.isEmpty()) {
+            int rndNum = random.nextInt(allQuestions.size());
+            List<Question> questionList = new ArrayList<>(allQuestions);
             return questionList.get(rndNum);
-        } else throw new RuntimeException("Set is empty");
+        } else {
+            throw new NoSuchElementException("Set is empty");
+        }
     }
 }

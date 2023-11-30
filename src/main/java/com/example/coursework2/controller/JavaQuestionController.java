@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/exam")
+@RequestMapping("/java_exam")
 
 public class JavaQuestionController {
 
