@@ -11,7 +11,7 @@ public class MathQuestionController {
 
     private final QuestionService questionService;
 
-    @Autowired
+
     public MathQuestionController(@Qualifier("mathQuestions") QuestionService questionService) {
         this.questionService = questionService;
     }

@@ -1,14 +1,12 @@
 package com.example.coursework2.service;
 
+import com.example.coursework2.exceptions.AmountMoreThanQuestionsQuantityException;
 import com.example.coursework2.questionclass.Question;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Component
@@ -34,17 +32,23 @@ public class MathQuestionService implements QuestionService<Question> {
 
     @Override
     public void remove(Question question) {
+        if (!questionSet.contains(question)) {
+            throw new AmountMoreThanQuestionsQuantityException("Question is not found");
+        }
         questionSet.remove(question);
     }
 
     @Override
     public Collection getAll() {
-
-        return null;
+        return questionSet;
     }
 
     @Override
     public Question getRandomQuestion() {
-        return null;
+        if (!questionSet.isEmpty() && questionSet.size() != 1) {
+            int rndNum = random.nextInt(questionSet.size());
+            List<Question> questionList = new ArrayList<>(questionSet);
+            return questionList.get(rndNum);
+        } else throw new RuntimeException("Set is empty");
     }
 }

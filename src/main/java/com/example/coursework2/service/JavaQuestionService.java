@@ -33,7 +33,7 @@ public class JavaQuestionService implements QuestionService<Question> {
     public void remove(Question question) {
         if (questionSet.contains(question)) {
             questionSet.remove(question);
-        } else throw new IllegalArgumentException("Question not found");
+        } else throw new IllegalArgumentException("Question is not found");
     }
 
     @Override
@@ -43,7 +43,7 @@ public class JavaQuestionService implements QuestionService<Question> {
 
     @Override
     public Question getRandomQuestion() {
-        if (!questionSet.isEmpty()) {
+        if (!questionSet.isEmpty()&&questionSet.size()!=1) {
             int rndNum = random.nextInt(questionSet.size());
             List<Question> questionsList = new ArrayList<>(questionSet);
             return questionsList.get(rndNum);

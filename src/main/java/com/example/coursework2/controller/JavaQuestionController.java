@@ -18,7 +18,6 @@ public class JavaQuestionController {
 
     private QuestionService questionService;
 
-    @Autowired
     public JavaQuestionController(@Qualifier("javaQuestions") QuestionService questionService) {
         this.questionService = questionService;
     }
