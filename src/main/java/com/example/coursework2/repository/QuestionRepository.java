@@ -1,15 +1,17 @@
 package com.example.coursework2.repository;
 
+import com.example.coursework2.questionclass.Question;
+
 import java.util.Collection;
 
-public interface QuestionRepository<T> {
-    void addQuestionFromString(String question, String answer);
+public interface QuestionRepository {
+    Question add(String question, String answer);
 
-    void add(T question);
+    Question add(Question question);
 
-    void remove(T question);
+    Question remove(Question question);
 
-    Collection<T> getAll();
+    Collection<Question> getAll();
 
 
 }

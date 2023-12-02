@@ -2,6 +2,7 @@ package com.example.coursework2.controller;
 
 import com.example.coursework2.questionclass.Question;
 import com.example.coursework2.service.QuestionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,9 +18,11 @@ public class MathQuestionController {
 
     private final QuestionService questionService;
 
+    @Autowired
     public MathQuestionController(@Qualifier("mathQuestions") QuestionService questionService) {
         this.questionService = questionService;
     }
+
     @GetMapping("/math")
     public Collection<Question> getAllQuestions() {
         return questionService.getAll();
@@ -27,16 +30,13 @@ public class MathQuestionController {
 
 
     @GetMapping("/add")
-    public String addQuestion(@RequestParam String question, @RequestParam String answer) {
-        questionService.add(question, answer);
-        return "successfully added";
+    public Question addQuestion(@RequestParam String question, @RequestParam String answer) {
+        return questionService.add(question, answer);
     }
 
     @GetMapping("/remove")
-    public String removeQuestion(@RequestParam String question, @RequestParam String answer) {
-        Question questionToRemove = new Question(question, answer);
-        questionService.remove(questionToRemove);
-        return "successfully removed";
-    }
+    public Question removeQuestion(@RequestParam String question, @RequestParam String answer) {
 
+        return questionService.remove(new Question(question, answer));
+    }
 }

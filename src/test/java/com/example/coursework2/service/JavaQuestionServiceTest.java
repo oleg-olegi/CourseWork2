@@ -1,13 +1,14 @@
 package com.example.coursework2.service;
 
 import com.example.coursework2.questionclass.Question;
-import org.junit.jupiter.api.BeforeEach;
+import com.example.coursework2.repository.JavaQuestionRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collection;
@@ -21,17 +22,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class JavaQuestionServiceTest {
+    @Mock
+    private JavaQuestionRepository javaQuestionRepository;
+    @Mock
+    private Random random;
     @InjectMocks
-    private JavaQuestionService javaQuestionService;
+    private JavaQuestionService out;
 
-    private Question questionMock = mock(Question.class);
-
-    private Random random = mock(Random.class);
-
-    @BeforeEach
-    void setJavaQuestionService() {
-        javaQuestionService = new JavaQuestionService();
-    }
 
     static Stream<Arguments> argumentsStream() {
         return Stream.of(Arguments.of("Question", "Answer"));
@@ -45,8 +42,10 @@ public class JavaQuestionServiceTest {
     }
 
     @ParameterizedTest
-    @MethodSource("argumentsStream")
-    void addTest(String question, String answer) {
+    @MethodSource("questionProvider")
+    void addTest(Question question1, Question question2,Question question3) {
+
+        when(javaQuestionRepository.add(question1)).thenReturn()
         Question addedQuestion = new Question(question, answer);//expected
         javaQuestionService.add(question, answer);//actual
         //проверяем, что объект добавлен в коллекцию

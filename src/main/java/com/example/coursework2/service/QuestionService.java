@@ -1,16 +1,18 @@
 package com.example.coursework2.service;
 
+import com.example.coursework2.questionclass.Question;
+
 import java.util.Collection;
 
-public interface QuestionService<T> {
-    void add(String question, String answer);
+public interface QuestionService {
+    Question add(String question, String answer);
 
-    void add(T question);
+    Question add(Question question);
 
-    void remove(T question);
+    Question  remove(Question question);
 
-    Collection<T> getAll();
+    Collection<Question> getAll();
 
-   T getRandomQuestion();
+   Question getRandomQuestion();
 
 }
