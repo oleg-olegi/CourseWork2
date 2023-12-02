@@ -2,11 +2,14 @@ package com.example.coursework2.repository;
 
 import com.example.coursework2.exceptions.AmountMoreThanQuestionsQuantityException;
 import com.example.coursework2.questionclass.Question;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
+
+import static com.example.coursework2.constants.QuestionConstants.MATH_QUESTIONS;
 
 @Repository
 @Component
@@ -19,18 +22,11 @@ public class MathRepository implements QuestionRepository {
         this.questionSet = new HashSet<>(INITIAL_CAPACITY);
     }
 
-    public Question addQuestionFromString(String question, String answer) {
-        Question result = (new Question(question, answer));
-        questionSet.add(result);
-        return result;
+    @PostConstruct
+    private void init() {
+        questionSet.addAll(MATH_QUESTIONS);
     }
 
-    @Override
-    public Question add(String question, String answer) {
-        Question result = new Question(question, answer);
-        questionSet.add(result);
-        return result;
-    }
 
     @Override
     public Question add(Question question) {

@@ -104,24 +104,5 @@ public class JavaQuestionServiceTest {
 //                collection.contains(question3));
 //    }
 //
-  //   Переопределение equals и hashCode в мок-объекте Question
-//    static class MockQuestion extends Question {
-//        public MockQuestion(String question, String answer) {
-//            super(question, answer);
-//        }
-//
-//        @Override
-//        public boolean equals(Object o) {
-//            if (this == o) return true;
-//            if (o == null || getClass() != o.getClass()) return false;
-//            Question question = (Question) o;
-//            return java.util.Objects.equals(getQuestion(), question.getQuestion()) &&
-//                    java.util.Objects.equals(getAnswer(), question.getAnswer());
-//        }
-//
-//        @Override
-//        public int hashCode() {
-//            return java.util.Objects.hash(getQuestion(), getAnswer());
-//        }
-//    }
+
 }

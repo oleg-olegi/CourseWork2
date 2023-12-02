@@ -24,7 +24,8 @@ public class MathQuestionService implements QuestionService {
 
     @Override
     public Question add(String question, String answer) {
-        return repository.add(question, answer);
+        Question resault = new Question(question, answer);
+        return repository.add(resault);
     }
 
     @Override

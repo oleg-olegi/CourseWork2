@@ -1,7 +1,9 @@
 package com.example.coursework2.repository;
 
+import com.example.coursework2.constants.QuestionConstants;
 import com.example.coursework2.exceptions.AmountMoreThanQuestionsQuantityException;
 import com.example.coursework2.questionclass.Question;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -9,6 +11,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
+import static com.example.coursework2.constants.QuestionConstants.ALL_QUESTIONS;
 
 @Repository
 @Component
@@ -21,11 +25,9 @@ public class JavaQuestionRepository implements QuestionRepository {
         this.questionSet = new HashSet<>(INITIAL_CAPACITY);
     }
 
-    @Override
-    public Question add(String question, String answer) {
-        Question result = new Question(question, answer);
-        questionSet.add(result);
-        return result;
+    @PostConstruct
+    private void init() {
+        questionSet.addAll(ALL_QUESTIONS);
     }
 
     @Override
