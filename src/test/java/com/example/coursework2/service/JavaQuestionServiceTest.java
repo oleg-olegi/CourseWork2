@@ -1,0 +1,108 @@
+package com.example.coursework2.service;
+
+import com.example.coursework2.questionclass.Question;
+import com.example.coursework2.repository.JavaQuestionRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.*;
+import java.util.stream.Stream;
+
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+
+@ExtendWith(MockitoExtension.class)
+public class JavaQuestionServiceTest {
+    @Mock
+    private JavaQuestionRepository javaQuestionRepository;
+    @Mock
+    private Random random;
+    @InjectMocks
+    private JavaQuestionService out;
+
+
+    static Stream<Arguments> argumentsStream() {
+        return Stream.of(Arguments.of("Question", "Answer"));
+    }
+
+    static Stream<Arguments> questionsProvider() {
+        return Stream.of(Arguments.of(
+                new Question("Question1", "Answer1"),
+                new Question("Question2", "Answer2"),
+                new Question("Question3", "Answer3")));
+    }
+
+    @ParameterizedTest
+    @MethodSource("argumentsStream")
+    void addTest(String question, String answer) {
+        when(javaQuestionRepository.add(question, answer)).thenReturn(new Question(question, answer));
+        Set<Question> questionSetWithObject = new HashSet<>();
+        Question result = new Question(question, answer);
+        questionSetWithObject.add(result);
+        when(javaQuestionRepository.getAll()).thenReturn(questionSetWithObject);
+        assertEquals(result, javaQuestionRepository.add(question, answer));
+        assertTrue(javaQuestionRepository.getAll().contains(result));
+    }
+
+//    @Test
+//    void addQuestionObjectTest() {
+//        when(questionMock.getQuestion()).thenReturn("QuestionText");
+//        when(questionMock.getAnswer()).thenReturn("AnswerText");
+//        javaQuestionService.add(questionMock);
+//        Collection<Question> questionSet = javaQuestionService.getAll();
+//        assertTrue(questionSet.contains(questionMock));
+//    }
+//
+//    @ParameterizedTest
+//    @MethodSource("argumentsStream")
+//    void removeTest(String question, String answer) {
+//        javaQuestionService.add(question, answer);
+//        Collection<Question> questionSet = javaQuestionService.getAll();
+//        Question questionToRemove = new Question(question, answer);
+//        javaQuestionService.remove(questionToRemove);
+//        assertTrue(questionSet.isEmpty());
+//        assertFalse(questionSet.contains(questionToRemove));
+//        assertThrows(IllegalArgumentException.class, () -> javaQuestionService.remove(questionToRemove));
+//    }
+//
+//    @ParameterizedTest
+//    @MethodSource("questionsProvider")
+//    void getAllTest(Question question1, Question question2, Question question3) {
+//        javaQuestionService.add(question1);
+//        javaQuestionService.add(question2);
+//        javaQuestionService.add(question3);
+//        Collection<Question> questions = javaQuestionService.getAll();
+//        assertTrue(
+//                questions.contains(question1) &&
+//                        questions.contains(question2) &&
+//                        questions.contains(question3));
+//        assertEquals(3, questions.size());
+//    }
+//
+//    @ParameterizedTest
+//    @MethodSource("questionsProvider")
+//    void getRandomQuestionTest(Question question1, Question question2, Question question3) {
+//        assertThrows(RuntimeException.class, () -> javaQuestionService.getRandomQuestion());
+//        javaQuestionService.add(question1);
+//        javaQuestionService.add(question2);
+//        javaQuestionService.add(question3);
+//        when(random.nextInt(3)).thenReturn(1);
+//        Question randomQuestion = javaQuestionService.getRandomQuestion();
+//        Collection<Question> collection = javaQuestionService.getAll();
+//        assertNotNull(randomQuestion);
+//        assertTrue(collection.contains(question1) ||
+//                collection.contains(question2) ||
+//                collection.contains(question3));
+//    }
+//
+
+}
